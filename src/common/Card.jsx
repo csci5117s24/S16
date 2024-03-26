@@ -4,9 +4,11 @@ import { useState } from "react";
 
 export default function Card({front, children, onFlip}) {
     const [isFront, setIsFront] = useState(true);
-
+    
     function flip() {
-        onFlip();
+        if (onFlip) {
+            onFlip();
+        }
         setIsFront(!isFront)
     }
 

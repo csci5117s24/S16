@@ -1,37 +1,55 @@
 import logo from '../logo.svg';
-import Card from '../Card'
+import Card from '../common/Card'
 import { useState } from 'react';
+import { useLoaderData } from 'react-router-dom';
+import Deck from '../common/Deck';
 
+async function loader({ request }) {
+  const result = await fetch("/api/deck", {
+    signal: request.signal,
+    method: "get",
+  });
+  if (result.ok) {
+    return await result.json()
+  } else {
+    // this is just going to trigger the 404 page, but we can fix that later :|
+    throw new Response("ERROR", { status: result.status });
+  }
+}
 
 function App() {
-  const [data, setData] = useState([
-    {front:"hi", back:"a basic greeting"},
-    {front:"hello", back:"a wordier greeting"},
-    {front:"world", back:"the thing you whatever...."}
-  ])
-  const [newFront, setNewFront] = useState("");
-  const [newBack, setNewBack] = useState("");
+  const { data } = useLoaderData();
+  const [decks, setDecks] = useState(data);
+  const [name, setName] = useState("");
 
-  function newCard() {
-    const newCardObj = {front:newFront, back:newBack}
-    setData([...data, newCardObj]);
+  async function newDeck() {
+    const result = await fetch("/api/deck", {
+      method: "POST",
+      headers: {
+          "Content-Type": "application/json",
+      },
+      body: JSON.stringify({name})
+    })
+    if (result.ok) {
+      setDecks([...decks, await result.json()]);
+      setName("");
+    }
   }
 
   return (
       <header className="App-header">
         <img src={logo} className="App-logo" alt="logo" />
-        <p>
-          {data.map(datum => 
-              <Card onFlip = {()=>alert("flip")}front={datum.front}>{datum.back}</Card>
-          )}
-        </p>
         <div>
-          <input value={newFront} onChange={e=>setNewFront(e.target.value)} placeholder="front"></input>
-          <input value={newBack} onChange={e=>setNewBack(e.target.value)} placeholder="back"></input>
-          <button onClick={newCard}>Add card</button>
+            {decks.map(deck => <Deck key={deck._id} deck={deck}></Deck>)}
+            <input value={name} placeholder="name" onChange={e=>setName(e.target.value)}></input>
+            <button onClick={newDeck}>Add Deck</button>
         </div>
       </header>
   );
 }
 
-export default App;
+export const App_Page = {
+  path:"/",
+  element:<App></App>,
+  loader:loader
+}

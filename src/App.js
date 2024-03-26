@@ -6,7 +6,7 @@ function App() {
 
   return (
     <div className="App">
-      <Link to="/hi">Hi page!</Link>
+      <Link to="/">home!</Link>
       <Outlet />
     </div>
   );

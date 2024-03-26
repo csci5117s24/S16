@@ -3,7 +3,7 @@ var mongoClient = require("mongodb").MongoClient;
 
 module.exports = async function (context, req) {
     const method = req.method.toLowerCase();
-    const client = await mongoClient.connect(process.send.AZURE_MONGO_DB)
+    const client = await mongoClient.connect(process.env.AZURE_MONGO_DB)
 
     if (method == "get") {
 

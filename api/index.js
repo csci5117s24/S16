@@ -12,9 +12,7 @@ app.http('getDecks', {
         let token = null
         if (auth_header) {
             token = Buffer.from(auth_header, "base64");
-            console.log(token)
             token = JSON.parse(token.toString());
-
             console.log(token)
         }
         const client = await mongoClient.connect(process.env.AZURE_MONGO_DB)

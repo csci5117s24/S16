@@ -2,11 +2,21 @@ const { app } = require('@azure/functions');
 const { ObjectId } = require('mongodb');
 const mongoClient = require("mongodb").MongoClient;
 
+
 app.http('getDecks', {
     methods: ['GET'],
     authLevel: 'anonymous',
     route: 'deck',
     handler: async (request, context) => {
+        const auth_header = request.headers.get('X-MS-CLIENT-PRINCIPAL')
+        let token = null
+        if (auth_header) {
+            token = Buffer.from(auth_header, "base64");
+            console.log(token)
+            token = JSON.parse(token.toString());
+
+            console.log(token)
+        }
         const client = await mongoClient.connect(process.env.AZURE_MONGO_DB)
         const decks = await client.db("flashcards").collection("decks").find({}).toArray()
         client.close();
@@ -69,6 +79,20 @@ app.http('updateDeck', {
         }
     },
 });
+function sleep(ms) {
+    return new Promise(resolve => setTimeout(resolve, ms));
+}
+// use as follows: `await sleep(1000);`
+app.get("test", {
+    route: "test",    
+    authLevel: 'anonymous',
+    handler: async function() {
+        await sleep(10000);
+        return {
+            jsonBody: {status: Math.random()>0.5}
+        }
+    }
+})
 
 app.http('newDeck', {
     methods: ['POST'],

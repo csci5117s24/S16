@@ -53,7 +53,8 @@ app.http('updateDeck', {
     authLevel: 'anonymous',
     route: 'deck/{id}',
     handler: async (request, context) => {
-        const id = request.params.id;
+        console.log("testing")
+        const id = request.paramsa.id;
 
         const body = await request.json();
         // skipping validation -- but I can at least do some basic defaulting, and only grab the things I want.

@@ -8,7 +8,8 @@ app.http('getDecks', {
     authLevel: 'anonymous',
     route: 'deck',
     handler: async (request, context) => {
-        const auth_header = request.headers.get('X-MS-CLIENT-PRINCIPAL')
+        context.log("getDecks howdy")
+        const auth_header = request.heaaeders.get('X-MS-CLIENT-PRINCIPAL')
         let token = null
         if (auth_header) {
             token = Buffer.from(auth_header, "base64");

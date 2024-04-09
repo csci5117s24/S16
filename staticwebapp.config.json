@@ -2,5 +2,17 @@
     "navigationFallback": {
       "rewrite": "index.html",
       "exclude": ["/images/*.{png,jpg,gif,ico}", "/*.{css,scss,js}"]
+    },
+    "auth": {
+      "identityProviders": {
+        "azureActiveDirectory": {
+          "userDetailsClaim": "http://schemas.xmlsoap.org/ws/2005/05/identity/claims/name",
+          "registration": {
+            "openIdIssuer": "https://login.microsoftonline.com/97a44845-a89f-4764-8702-8aa84b847aff",
+            "clientIdSettingName": "AZURE_CLIENT_ID",
+            "clientSecretSettingName": "AZURE_CLIENT_SECRET"
+          }
+        }
+      }
     }
 }

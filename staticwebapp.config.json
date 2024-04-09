@@ -1,28 +1,28 @@
 {
-    "navigationFallback": {
-      "rewrite": "index.html",
-      "exclude": ["/images/*.{png,jpg,gif,ico}", "/*.{css,scss,js}"]
-    },
-    "auth": {
-      "identityProviders": {
-        "customOpenIdConnectProviders": {
-          "aadb2c": {
-            "registration": {
-              "clientIdSettingName": "AZURE_CLIENT_ID",
-              "clientCredential": {
-                "clientSecretSettingName": "AZURE_CLIENT_SECRET"
-              },
-              "openIdConnectConfiguration": {
-                "wellKnownOpenIdConfiguration": "https://97a44845-a89f-4764-8702-8aa84b847aff.b2clogin.com/97a44845-a89f-4764-8702-8aa84b847aff.onmicrosoft.com/B2C_1_loginorsignup/v2.0/.well-known/openid-configuration"
-              }
+  "navigationFallback": {
+    "rewrite": "index.html",
+    "exclude": ["/images/*.{png,jpg,gif,ico}", "/*.{css,scss,js}"]
+  },
+  "auth": {
+    "identityProviders": {
+      "customOpenIdConnectProviders": {
+        "aadb2c": {
+          "registration": {
+            "clientIdSettingName": "AZURE_CLIENT_ID",
+            "clientCredential": {
+              "clientSecretSettingName": "AZURE_CLIENT_SECRET"
             },
-            "login": {
-              "nameClaimType": "http://schemas.xmlsoap.org/ws/2005/05/identity/claims/name",
-              "scopes": [],
-              "loginParameterNames": []
+            "openIdConnectConfiguration": {
+              "wellKnownOpenIdConfiguration": "https://5117kluvertest.b2clogin.com/5117kluvertest.onmicrosoft.com/B2C_1_loginorsignup/v2.0/.well-known/openid-configuration"
             }
+          },
+          "login": {
+            "nameClaimType": "http://schemas.xmlsoap.org/ws/2005/05/identity/claims/name",
+            "scopes": [],
+            "loginParameterNames": []
           }
         }
       }
     }
+  }
 }
